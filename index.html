@@ -85,10 +85,9 @@ color: white !important;
 background: rgba(139, 92, 246, 0.3);
 border-right: 3px solid #8b5cf6;
 }
-/* ========== الهيدر (شريط القوائم) - تم إزاحته للأسفل بمقدار 5 سم مع جميع محتوياته ========== */
 .main-header {
 min-height: 90px;
-padding-top: 70px;  /* 5 سم إزاحة */
+padding-top: 70px;
 padding-bottom: 12px;
 padding-left: 16px;
 padding-right: 16px;
@@ -101,7 +100,6 @@ border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 position: relative;
 z-index: 10;
 }
-/* زر القائمة */
 .menu-btn {
 width: 48px;
 height: 48px;
@@ -122,7 +120,6 @@ background: rgba(139, 92, 246, 0.3);
 font-size: 24px;
 color: #4c1d95;
 }
-/* أزرار التصدير */
 .export-btn {
 width: 44px;
 height: 44px;
@@ -136,7 +133,6 @@ cursor: pointer;
 .export-btn:active {
 transform: scale(0.95);
 }
-/* زر الرجوع */
 .back-btn {
 padding: 6px 12px;
 background: #f3f4f6;
@@ -148,7 +144,6 @@ cursor: pointer;
 .back-btn:active {
 transform: scale(0.95);
 }
-/* ========== نهاية تعديل الهيدر ========== */
 .card-hover {
 transition: all 0.3s ease;
 }
@@ -306,7 +301,7 @@ grid-template-columns: repeat(2, 1fr);
 <!-- Main App -->
 <div id="mainApp" class="hidden h-screen flex flex-col">
 
-<!-- Header (شريط القوائم) - تم إزاحته للأسفل بمقدار 5 سم -->
+<!-- Header -->
 <header class="main-header">
 <div class="flex items-center gap-3">
 <button id="menuButton" class="menu-btn" onclick="toggleSidebar()">
@@ -383,22 +378,33 @@ grid-template-columns: repeat(2, 1fr);
 </main>
 </div>
 
-<!-- ====================== المودالات ====================== -->
-
-<!-- Student Modal -->
+<!-- Student Modal - مع الحقول الجديدة -->
 <div id="studentModal" class="modal">
 <div class="glass rounded-2xl p-4 w-full max-w-[95%] mx-2 max-h-[90vh] overflow-y-auto">
 <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold text-gray-800" id="modalTitle">إضافة طالبة جديدة</h3><button onclick="closeModal('studentModal')" class="p-2 rounded-lg hover:bg-gray-100"><i class="fas fa-times text-gray-500"></i></button></div>
 <form id="studentForm" onsubmit="saveStudent(event)" class="grid grid-cols-1 gap-3">
 <input type="hidden" id="studentId">
+
 <div><label class="text-sm">الاسم الكامل *</label><input type="text" id="studentName" required class="w-full px-3 py-2 rounded-xl border text-sm"></div>
+<div><label class="text-sm">تاريخ الميلاد</label><input type="date" id="studentBirthDate" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
 <div><label class="text-sm">الصف *</label><select id="studentGrade" required class="w-full px-3 py-2 rounded-xl border text-sm"><option value="">اختر الصف</option><option>الأول الابتدائي</option><option>الثاني الابتدائي</option><option>الثالث الابتدائي</option><option>الرابع الابتدائي</option><option>الخامس الابتدائي</option><option>السادس الابتدائي</option><option>الأول المتوسط</option><option>الثاني المتوسط</option><option>الثالث المتوسط</option><option>الأول الثانوي</option><option>الثاني الثانوي</option><option>الثالث الثانوي</option></select></div>
 <div><label class="text-sm">الشعبة *</label><input type="text" id="studentSection" required class="w-full px-3 py-2 rounded-xl border text-sm" placeholder="مثال: أ، ب، ج"></div>
-<div><label class="text-sm">اسم ولي الأمر</label><input type="text" id="studentParentName" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
-<div><label class="text-sm">رقم ولي الأمر</label><input type="tel" id="studentParentPhone" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
+
+<div class="border-t pt-2 mt-2"><h4 class="font-bold text-sm mb-2">معلومات الأب</h4></div>
+<div><label class="text-sm">اسم الأب</label><input type="text" id="studentFatherName" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
+<div><label class="text-sm">مهنة الأب</label><input type="text" id="studentFatherJob" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
+<div><label class="text-sm">رقم هاتف الأب</label><input type="tel" id="studentFatherPhone" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
+
+<div class="border-t pt-2 mt-2"><h4 class="font-bold text-sm mb-2">معلومات الأم</h4></div>
+<div><label class="text-sm">اسم الأم</label><input type="text" id="studentMotherName" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
+<div><label class="text-sm">مهنة الأم</label><input type="text" id="studentMotherJob" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
+<div><label class="text-sm">رقم هاتف الأم</label><input type="tel" id="studentMotherPhone" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
+
+<div class="border-t pt-2 mt-2"><h4 class="font-bold text-sm mb-2">المستوى العلمي والسلوك</h4></div>
 <div><label class="text-sm">المستوى العلمي *</label><select id="studentAcademicLevel" required class="w-full px-3 py-2 rounded-xl border text-sm"><option value="excellent">ممتاز (95-100)</option><option value="verygood">جيد جداً (85-94)</option><option value="good">جيد (75-84)</option><option value="average">متوسط (65-74)</option><option value="weak">ضعيف (أقل من 65)</option></select></div>
 <div><label class="text-sm">السلوك *</label><select id="studentBehavior" required class="w-full px-3 py-2 rounded-xl border text-sm"><option value="excellent">ممتاز</option><option value="good">جيد</option><option value="average">متوسط</option><option value="needs_improvement">يحتاج تحسين</option></select></div>
 <div class="md:col-span-2"><label class="text-sm">ملاحظات إضافية</label><textarea id="studentNotes" rows="2" class="w-full px-3 py-2 rounded-xl border text-sm"></textarea></div>
+
 <div class="flex justify-end gap-3 mt-3"><button type="button" onclick="closeModal('studentModal')" class="px-4 py-2 rounded-xl border text-sm">إلغاء</button><button type="submit" class="btn-primary px-4 py-2 rounded-xl text-white text-sm"><i class="fas fa-save ml-2"></i> حفظ</button></div>
 </form>
 </div>
@@ -439,7 +445,7 @@ grid-template-columns: repeat(2, 1fr);
 <!-- Report Modal -->
 <div id="reportModal" class="modal">
 <div class="glass rounded-2xl p-4 w-full max-w-[95%] mx-2 max-h-[90vh] overflow-y-auto">
-<div class="flex justify-between items-center mb-4 no-print flex-wrap gap-2"><h3 class="text-lg font-bold text-gray-800">تقرير الطالبة</h3><div class="flex gap-2"><button onclick="exportReportToPDF()" class="btn-primary px-3 py-1 rounded-lg text-white text-sm"><i class="fas fa-file-pdf ml-1"></i> PDF</button><button onclick="closeModal('reportModal')" class="p-2 rounded-lg hover:bg-gray-100"><i class="fas fa-times text-gray-500"></i></button></div></div>
+<div class="flex justify-between items-center mb-4 no-print flex-wrap gap-2"><h3 class="text-lg font-bold text-gray-800">تقرير الطالبة الشامل</h3><div class="flex gap-2"><button onclick="exportReportToPDF()" class="btn-primary px-3 py-1 rounded-lg text-white text-sm"><i class="fas fa-file-pdf ml-1"></i> PDF</button><button onclick="closeModal('reportModal')" class="p-2 rounded-lg hover:bg-gray-100"><i class="fas fa-times text-gray-500"></i></button></div></div>
 <div id="reportContent"></div>
 </div>
 </div>
@@ -519,6 +525,12 @@ function formatDate(dateStr) {
   return `${d.getDate()} ${monthNames[d.getMonth() + 1]} ${d.getFullYear()}`;
 }
 
+function formatBirthDate(dateStr) {
+  if (!dateStr) return '-';
+  const d = new Date(dateStr);
+  return `${d.getDate()} / ${monthNames[d.getMonth() + 1]} / ${d.getFullYear()}`;
+}
+
 function handleLogin() {
   const username = document.getElementById('loginUsername').value;
   const password = document.getElementById('loginPassword').value;
@@ -544,10 +556,10 @@ function logout() {
 
 function generateSampleData() {
   students = [
-    { id: 1, name: 'سارة أحمد محمد', grade: 'الثالث المتوسط', section: 'أ', parentName: 'أحمد محمد', parentPhone: '0501234567', academicLevel: 'excellent', behavior: 'excellent', notes: 'متميزة', status: 'active' },
-    { id: 2, name: 'نورة خالد سعد', grade: 'الثالث المتوسط', section: 'أ', parentName: 'خالد سعد', parentPhone: '0502345678', academicLevel: 'verygood', behavior: 'good', notes: 'تحتاج تشجيع', status: 'active' },
-    { id: 3, name: 'ريم عبدالله فهد', grade: 'الثالث المتوسط', section: 'ب', parentName: 'عبدالله فهد', parentPhone: '0503456789', academicLevel: 'good', behavior: 'average', notes: 'متابعة', status: 'active' },
-    { id: 4, name: 'ليان عمر إبراهيم', grade: 'الثاني الثانوي', section: 'أ', parentName: 'عمر إبراهيم', parentPhone: '0504567890', academicLevel: 'excellent', behavior: 'excellent', notes: 'قائدة', status: 'active' }
+    { id: 1, name: 'سارة أحمد محمد', birthDate: '2010-05-15', grade: 'الثالث المتوسط', section: 'أ', fatherName: 'أحمد محمد', fatherJob: 'مهندس', fatherPhone: '0501111111', motherName: 'فاطمة علي', motherJob: 'معلمة', motherPhone: '0502222222', academicLevel: 'excellent', behavior: 'excellent', notes: 'متميزة', status: 'active' },
+    { id: 2, name: 'نورة خالد سعد', birthDate: '2011-03-20', grade: 'الثالث المتوسط', section: 'أ', fatherName: 'خالد سعد', fatherJob: 'طبيب', fatherPhone: '0503333333', motherName: 'منى إبراهيم', motherJob: 'ربة منزل', motherPhone: '0504444444', academicLevel: 'verygood', behavior: 'good', notes: 'تحتاج تشجيع', status: 'active' },
+    { id: 3, name: 'ريم عبدالله فهد', birthDate: '2010-11-10', grade: 'الثالث المتوسط', section: 'ب', fatherName: 'عبدالله فهد', fatherJob: 'موظف', fatherPhone: '0505555555', motherName: 'نوال سعد', motherJob: 'ممرضة', motherPhone: '0506666666', academicLevel: 'good', behavior: 'average', notes: 'متابعة', status: 'active' },
+    { id: 4, name: 'ليان عمر إبراهيم', birthDate: '2009-07-25', grade: 'الثاني الثانوي', section: 'أ', fatherName: 'عمر إبراهيم', fatherJob: 'أستاذ جامعي', fatherPhone: '0507777777', motherName: 'هناء محمود', motherJob: 'دكتورة', motherPhone: '0508888888', academicLevel: 'excellent', behavior: 'excellent', notes: 'قائدة', status: 'active' }
   ];
   attendanceRecords = [
     { id: 1, studentId: 3, date: '2024-04-20', type: 'absent', minutes: 0, reason: 'مرض' },
@@ -636,18 +648,63 @@ function renderStudents(container) {
 
 function openStudentModal(id = null) {
   const modal = document.getElementById('studentModal');
-  if(id) { const s = students.find(s => s.id === id); if(s) { document.getElementById('modalTitle').textContent = 'تعديل بيانات الطالبة'; document.getElementById('studentId').value = s.id; document.getElementById('studentName').value = s.name; document.getElementById('studentGrade').value = s.grade; document.getElementById('studentSection').value = s.section; document.getElementById('studentParentName').value = s.parentName || ''; document.getElementById('studentParentPhone').value = s.parentPhone || ''; document.getElementById('studentAcademicLevel').value = s.academicLevel; document.getElementById('studentBehavior').value = s.behavior; document.getElementById('studentNotes').value = s.notes || ''; } }
-  else { document.getElementById('modalTitle').textContent = 'إضافة طالبة جديدة'; document.getElementById('studentForm').reset(); document.getElementById('studentId').value = ''; }
+  if(id) { const s = students.find(s => s.id === id); if(s) { 
+    document.getElementById('modalTitle').textContent = 'تعديل بيانات الطالبة'; 
+    document.getElementById('studentId').value = s.id; 
+    document.getElementById('studentName').value = s.name; 
+    document.getElementById('studentBirthDate').value = s.birthDate || '';
+    document.getElementById('studentGrade').value = s.grade; 
+    document.getElementById('studentSection').value = s.section;
+    document.getElementById('studentFatherName').value = s.fatherName || '';
+    document.getElementById('studentFatherJob').value = s.fatherJob || '';
+    document.getElementById('studentFatherPhone').value = s.fatherPhone || '';
+    document.getElementById('studentMotherName').value = s.motherName || '';
+    document.getElementById('studentMotherJob').value = s.motherJob || '';
+    document.getElementById('studentMotherPhone').value = s.motherPhone || '';
+    document.getElementById('studentAcademicLevel').value = s.academicLevel; 
+    document.getElementById('studentBehavior').value = s.behavior; 
+    document.getElementById('studentNotes').value = s.notes || ''; 
+  } }
+  else { 
+    document.getElementById('modalTitle').textContent = 'إضافة طالبة جديدة'; 
+    document.getElementById('studentForm').reset(); 
+    document.getElementById('studentId').value = ''; 
+  }
   modal.classList.add('show');
 }
 
-function saveStudent(e) { e.preventDefault(); const id = document.getElementById('studentId').value; const data = { id: id ? parseInt(id) : Date.now(), name: document.getElementById('studentName').value, grade: document.getElementById('studentGrade').value, section: document.getElementById('studentSection').value, parentName: document.getElementById('studentParentName').value, parentPhone: document.getElementById('studentParentPhone').value, academicLevel: document.getElementById('studentAcademicLevel').value, behavior: document.getElementById('studentBehavior').value, notes: document.getElementById('studentNotes').value, status: 'active' }; if(id) { const idx = students.findIndex(s => s.id === parseInt(id)); if(idx !== -1) students[idx] = data; } else students.push(data); saveAllData(); closeModal('studentModal'); renderStudentsTable(); }
+function saveStudent(e) { 
+  e.preventDefault(); 
+  const id = document.getElementById('studentId').value; 
+  const data = { 
+    id: id ? parseInt(id) : Date.now(), 
+    name: document.getElementById('studentName').value, 
+    birthDate: document.getElementById('studentBirthDate').value,
+    grade: document.getElementById('studentGrade').value, 
+    section: document.getElementById('studentSection').value,
+    fatherName: document.getElementById('studentFatherName').value,
+    fatherJob: document.getElementById('studentFatherJob').value,
+    fatherPhone: document.getElementById('studentFatherPhone').value,
+    motherName: document.getElementById('studentMotherName').value,
+    motherJob: document.getElementById('studentMotherJob').value,
+    motherPhone: document.getElementById('studentMotherPhone').value,
+    academicLevel: document.getElementById('studentAcademicLevel').value, 
+    behavior: document.getElementById('studentBehavior').value, 
+    notes: document.getElementById('studentNotes').value, 
+    status: 'active' 
+  }; 
+  if(id) { const idx = students.findIndex(s => s.id === parseInt(id)); if(idx !== -1) students[idx] = data; } 
+  else students.push(data); 
+  saveAllData(); 
+  closeModal('studentModal'); 
+  renderStudentsTable(); 
+}
 function editStudent(id) { openStudentModal(id); }
 function deleteStudent(id) { if(confirm('هل أنت متأكدة من الحذف؟')) { students = students.filter(s => s.id !== id); attendanceRecords = attendanceRecords.filter(a => a.studentId !== id); notes = notes.filter(n => n.studentId !== id); rewards = rewards.filter(r => r.studentId !== id); saveAllData(); renderStudentsTable(); } }
 
 function renderAttendance(container) {
   let filtered = attendanceRecords;
-  container.innerHTML = `<div class="space-y-3"><div class="flex gap-2"><input type="date" id="attFilterDate" onchange="filterAttendanceByDate(this.value)" class="p-2 rounded-xl border text-sm flex-1"><button onclick="openAttendanceModal()" class="btn-primary px-3 py-2 rounded-xl text-white text-sm">تسجيل</button></div><div class="glass rounded-2xl overflow-x-auto"><table class="w-full"><thead><tr><th class="p-2">الطالبة</th><th class="p-2">النوع</th><th class="p-2">التاريخ</th><th class="p-2">السبب</th><th class="p-2"></th><tr></thead><tbody>${filtered.map(a => { const s = students.find(st => st.id === a.studentId); return `<tr><td class="p-2 text-sm">${s?.name || '-'}</td><td class="p-2"><span class="status-badge text-xs">${a.type === 'absent' ? 'غياب' : a.type === 'late' ? 'تأخير' : 'بعذر'}</span></td><td class="p-2 text-sm">${a.date}</td><td class="p-2 text-sm">${a.reason || '-'}</td><td class="p-2"><button onclick="deleteAttendance(${a.id})" class="text-red-500"><i class="fas fa-trash"></i></button></td></tr>`; }).join('')}</tbody>}</div></div>`;
+  container.innerHTML = `<div class="space-y-3"><div class="flex gap-2"><input type="date" id="attFilterDate" onchange="filterAttendanceByDate(this.value)" class="p-2 rounded-xl border text-sm flex-1"><button onclick="openAttendanceModal()" class="btn-primary px-3 py-2 rounded-xl text-white text-sm">تسجيل</button></div><div class="glass rounded-2xl overflow-x-auto"><table class="w-full"><thead><tr><th class="p-2">الطالبة</th><th class="p-2">النوع</th><th class="p-2">التاريخ</th><th class="p-2">السبب</th><th class="p-2"></th></tr></thead><tbody>${filtered.map(a => { const s = students.find(st => st.id === a.studentId); return `<tr><td class="p-2 text-sm">${s?.name || '-'}</td><td class="p-2"><span class="status-badge text-xs">${a.type === 'absent' ? 'غياب' : a.type === 'late' ? 'تأخير' : 'بعذر'}</span></td><td class="p-2 text-sm">${a.date}</td><td class="p-2 text-sm">${a.reason || '-'}</td><td class="p-2"><button onclick="deleteAttendance(${a.id})" class="text-red-500"><i class="fas fa-trash"></i></button></td></tr>`; }).join('')}</tbody>}</div></div>`;
 }
 function filterAttendanceByDate(date) { renderAttendance(document.getElementById('contentArea')); }
 function openAttendanceModal() { document.getElementById('attStudentId').innerHTML = '<option value="">اختر الطالبة</option>' + students.map(s => `<option value="${s.id}">${s.name}</option>`); document.getElementById('attDate').value = new Date().toISOString().split('T')[0]; document.getElementById('attendanceModal').classList.add('show'); }
@@ -670,7 +727,7 @@ function deleteReward(id) { if(confirm('حذف الجائزة؟')) { rewards = r
 
 function renderReports(container) {
   container.innerHTML = `<div class="space-y-3"><div class="glass rounded-2xl p-3"><input type="text" id="reportSearchInput" placeholder="بحث بالاسم..." class="w-full p-2 rounded-xl border text-sm mb-2"><div class="overflow-x-auto"><table class="w-full"><thead><tr><th class="p-2">الاسم</th><th class="p-2">الغياب</th><th class="p-2">التأخير</th></tr></thead><tbody id="reportsTableBody"></tbody></table></div></div></div>`;
-  const update = () => { let filtered = students; if(currentReportSearchTerm) filtered = students.filter(s => s.name.includes(currentReportSearchTerm)); document.getElementById('reportsTableBody').innerHTML = filtered.map(s => { const abs = attendanceRecords.filter(a => a.studentId === s.id && a.type === 'absent').length; const late = attendanceRecords.filter(a => a.studentId === s.id && a.type === 'late').length; return `<tr class="border-b cursor-pointer hover:bg-gray-50" onclick="showFullReport(${s.id})"><td class="p-2 text-purple-600 font-medium">${s.name}</td><td class="p-2 text-red-600">${abs}</td><td class="p-2 text-orange-600">${late}</td><tr>`; }).join(''); };
+  const update = () => { let filtered = students; if(currentReportSearchTerm) filtered = students.filter(s => s.name.includes(currentReportSearchTerm)); document.getElementById('reportsTableBody').innerHTML = filtered.map(s => { const abs = attendanceRecords.filter(a => a.studentId === s.id && a.type === 'absent').length; const late = attendanceRecords.filter(a => a.studentId === s.id && a.type === 'late').length; return `<tr class="border-b cursor-pointer hover:bg-gray-50" onclick="showFullReport(${s.id})"><td class="p-2 text-purple-600 font-medium">${s.name}</td><td class="p-2 text-red-600">${abs}</td><td class="p-2 text-orange-600">${late}</td></tr>`; }).join(''); };
   document.getElementById('reportSearchInput').addEventListener('input', (e) => { currentReportSearchTerm = e.target.value; update(); });
   update();
 }
@@ -683,18 +740,80 @@ function showFullReport(studentId) {
   const studentRewards = rewards.filter(r => r.studentId === studentId);
   const absences = studentAttendance.filter(a => a.type === 'absent');
   const lates = studentAttendance.filter(a => a.type === 'late');
-  document.getElementById('reportContent').innerHTML = `<div id="reportPrintArea"><div class="report-header"><h2 class="text-lg font-bold">تقرير ${s.name}</h2></div><div class="glass p-3 mb-2"><div class="info-row"><span>الاسم:</span><span>${s.name}</span></div><div class="info-row"><span>الصف:</span><span>${s.grade} - ${s.section}</span></div><div class="info-row"><span>المستوى:</span><span>${academicLabels[s.academicLevel]}</span></div><div class="info-row"><span>السلوك:</span><span class="status-badge ${behaviorLabels[s.behavior].class}">${behaviorLabels[s.behavior].name}</span></div><div class="info-row"><span>ولي الأمر:</span><span>${s.parentName || '-'}</span></div><div class="info-row"><span>هاتف ولي الأمر:</span><span>${s.parentPhone || '-'}</span></div></div><div class="glass p-3 mb-2"><h3 class="font-bold">إحصائيات الحضور</h3><p>الغياب: ${absences.length}</p><p>التأخير: ${lates.length}</p></div><div class="glass p-3 mb-2"><h3 class="font-bold">الملاحظات</h3>${studentNotes.map(n => `<div class="note-card p-1 mb-1">${n.text}</div>`).join('') || 'لا توجد ملاحظات'}</div><div class="glass p-3"><h3 class="font-bold">الجوائز</h3>${studentRewards.map(r => `<div class="flex items-center gap-2 p-1"><i class="fas fa-trophy text-yellow-600"></i><span>${r.reason}</span></div>`).join('') || 'لا توجد جوائز'}</div></div>`;
+  
+  document.getElementById('reportContent').innerHTML = `<div id="reportPrintArea">
+    <div class="report-header text-center">
+      <h2 class="text-xl font-bold">تقرير الطالبة الشامل</h2>
+      <p class="text-sm">${s.name}</p>
+    </div>
+    
+    <!-- معلومات شخصية -->
+    <div class="glass p-3 mb-2">
+      <h3 class="font-bold text-md mb-2 border-b pb-1">المعلومات الشخصية</h3>
+      <div class="info-row"><span class="font-bold">الاسم الكامل:</span><span>${s.name}</span></div>
+      <div class="info-row"><span class="font-bold">تاريخ الميلاد:</span><span>${formatBirthDate(s.birthDate)}</span></div>
+      <div class="info-row"><span class="font-bold">الصف:</span><span>${s.grade} - ${s.section}</span></div>
+      <div class="info-row"><span class="font-bold">المستوى العلمي:</span><span>${academicLabels[s.academicLevel]}</span></div>
+      <div class="info-row"><span class="font-bold">السلوك:</span><span class="status-badge ${behaviorLabels[s.behavior].class}">${behaviorLabels[s.behavior].name}</span></div>
+    </div>
+    
+    <!-- معلومات الأب -->
+    <div class="glass p-3 mb-2">
+      <h3 class="font-bold text-md mb-2 border-b pb-1">معلومات الأب</h3>
+      <div class="info-row"><span class="font-bold">اسم الأب:</span><span>${s.fatherName || '-'}</span></div>
+      <div class="info-row"><span class="font-bold">المهنة:</span><span>${s.fatherJob || '-'}</span></div>
+      <div class="info-row"><span class="font-bold">رقم الهاتف:</span><span>${s.fatherPhone || '-'}</span></div>
+    </div>
+    
+    <!-- معلومات الأم -->
+    <div class="glass p-3 mb-2">
+      <h3 class="font-bold text-md mb-2 border-b pb-1">معلومات الأم</h3>
+      <div class="info-row"><span class="font-bold">اسم الأم:</span><span>${s.motherName || '-'}</span></div>
+      <div class="info-row"><span class="font-bold">المهنة:</span><span>${s.motherJob || '-'}</span></div>
+      <div class="info-row"><span class="font-bold">رقم الهاتف:</span><span>${s.motherPhone || '-'}</span></div>
+    </div>
+    
+    <!-- إحصائيات الحضور -->
+    <div class="glass p-3 mb-2">
+      <h3 class="font-bold text-md mb-2 border-b pb-1">إحصائيات الحضور</h3>
+      <div class="grid grid-cols-2 gap-3 text-center">
+        <div class="p-2 bg-red-50 rounded-xl"><p class="text-xl font-bold text-red-600">${absences.length}</p><p>غياب</p></div>
+        <div class="p-2 bg-orange-50 rounded-xl"><p class="text-xl font-bold text-orange-600">${lates.length}</p><p>تأخير</p></div>
+      </div>
+    </div>
+    
+    <!-- الملاحظات -->
+    <div class="glass p-3 mb-2">
+      <h3 class="font-bold text-md mb-2 border-b pb-1">ملاحظات المرشد</h3>
+      ${studentNotes.map(n => `<div class="note-card p-2 mb-1"><p>${n.text}</p><span class="text-xs text-gray-500">${n.date}</span></div>`).join('') || '<div class="empty-message text-xs">لا توجد ملاحظات</div>'}
+    </div>
+    
+    <!-- الجوائز التحفيزية -->
+    <div class="glass p-3 mb-2">
+      <h3 class="font-bold text-md mb-2 border-b pb-1">الجوائز التحفيزية</h3>
+      ${studentRewards.map(r => `<div class="flex items-center gap-2 p-1 border-b"><i class="fas fa-trophy text-yellow-600"></i><span>${r.reason} (${r.date})</span></div>`).join('') || '<div class="empty-message text-xs">لا توجد جوائز</div>'}
+    </div>
+    
+    <!-- التوقيعات -->
+    <div class="glass p-3 mt-3">
+      <div class="info-row mb-2"><span class="font-bold">اسم مرشدة الصف:</span><span class="border-b border-gray-400 min-w-[150px] inline-block px-4">....................</span></div>
+      <div class="info-row mb-2"><span class="font-bold">توقيع المرشدة:</span><span class="border-b border-gray-400 min-w-[150px] inline-block px-4">....................</span></div>
+      <div class="info-row"><span class="font-bold">توقيع ولي الأمر:</span><span class="border-b border-gray-400 min-w-[150px] inline-block px-4">....................</span></div>
+    </div>
+    
+    <div class="text-center text-xs text-gray-400 mt-3">تم إنشاء التقرير بواسطة نظام المرشد التربوي</div>
+  </div>`;
   document.getElementById('reportModal').classList.add('show');
 }
 
-function exportReportToPDF() { const element = document.getElementById('reportPrintArea'); html2pdf().set({ margin: 5, filename: `تقرير_طالبة.pdf` }).from(element).save(); }
+function exportReportToPDF() { const element = document.getElementById('reportPrintArea'); html2pdf().set({ margin: 8, filename: `تقرير_${students.find(s => s.id === parseInt(document.getElementById('reportModal').getAttribute('data-student-id')))?.name || 'طالبة'}.pdf`, image: { quality: 0.98 }, html2canvas: { scale: 2 } }).from(element).save(); }
 
 function renderSettings(container) {
   container.innerHTML = `<div class="glass rounded-2xl p-4"><button onclick="exportToExcel()" class="btn-primary w-full py-2 rounded-xl mb-2 text-white">تصدير Excel</button><button onclick="clearAllData()" class="bg-red-600 w-full py-2 rounded-xl text-white mb-2">حذف جميع البيانات</button><div class="bg-gray-50 p-2 rounded-xl text-sm"><p>الطالبات: ${students.length}</p><p>سجلات الغياب: ${attendanceRecords.length}</p><p>الملاحظات: ${notes.length}</p><p>الجوائز: ${rewards.length}</p></div></div>`;
 }
 
 function exportToExcel() {
-  const data = students.map(s => ({ 'الاسم': s.name, 'الصف': s.grade, 'الشعبة': s.section, 'ولي الأمر': s.parentName, 'الهاتف': s.parentPhone, 'المستوى': academicLabels[s.academicLevel], 'السلوك': behaviorLabels[s.behavior].name }));
+  const data = students.map(s => ({ 'الاسم': s.name, 'تاريخ الميلاد': s.birthDate || '-', 'الصف': s.grade, 'الشعبة': s.section, 'اسم الأب': s.fatherName || '-', 'مهنة الأب': s.fatherJob || '-', 'هاتف الأب': s.fatherPhone || '-', 'اسم الأم': s.motherName || '-', 'مهنة الأم': s.motherJob || '-', 'هاتف الأم': s.motherPhone || '-', 'المستوى': academicLabels[s.academicLevel], 'السلوك': behaviorLabels[s.behavior].name }));
   const ws = XLSX.utils.json_to_sheet(data);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'الطالبات');
@@ -704,7 +823,6 @@ function exportToExcel() {
 function exportCurrentToPDF() { html2pdf().from(document.getElementById('contentArea')).save(); }
 function clearAllData() { if(confirm('تحذير! حذف جميع البيانات؟')) { students = []; attendanceRecords = []; notes = []; rewards = []; saveAllData(); showScreen('dashboard'); } }
 
-// مستمعات إضافية لزر القائمة
 document.addEventListener('DOMContentLoaded', function() {
   const menuBtn = document.getElementById('menuButton');
   if (menuBtn) {
