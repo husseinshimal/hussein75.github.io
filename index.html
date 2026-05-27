@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
 <title>المرشد التربوي - نظام إدارة الطالبات</title>
@@ -10,7 +8,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 <script>
 tailwind.config = {
@@ -141,22 +138,8 @@ font-size: 13px;
 font-weight: 500;
 cursor: pointer;
 }
-.back-btn:active {
-transform: scale(0.95);
-}
-.card-hover {
-transition: all 0.3s ease;
-}
-.card-hover:hover {
-transform: translateY(-5px);
-box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-}
 .btn-primary {
 background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%);
-transition: all 0.3s ease;
-}
-.btn-primary:active {
-transform: translateY(-2px);
 }
 .behavior-excellent { background: #10b981; color: white; }
 .behavior-good { background: #3b82f6; color: white; }
@@ -187,12 +170,6 @@ font-weight: 600;
 display: inline-block;
 white-space: nowrap;
 }
-@media print {
-body * { visibility: hidden; }
-#printArea, #printArea * { visibility: visible; }
-#printArea { position: absolute; left: 0; top: 0; width: 100%; background: white; }
-.no-print { display: none !important; }
-}
 .dashboard-scroll {
 height: calc(100vh - 140px);
 overflow-y: auto;
@@ -217,31 +194,18 @@ overflow-x: auto;
 -webkit-overflow-scrolling: touch;
 }
 table {
-min-width: 600px;
-}
-@media (max-width: 640px) {
-table {
 min-width: 500px;
+width: 100%;
+border-collapse: collapse;
 }
-.glass {
-padding: 1rem;
+th, td {
+padding: 10px;
+text-align: right;
+border-bottom: 1px solid #e5e7eb;
 }
-.p-6 { padding: 1rem; }
-.p-4 { padding: 0.75rem; }
-.text-3xl { font-size: 1.5rem; }
-.text-2xl { font-size: 1.25rem; }
-}
-button, .tab-btn, .action-btn, .sidebar-item {
-min-height: 44px;
-touch-action: manipulation;
-}
-.grid-cols-1.md\:grid-cols-2 {
-grid-template-columns: 1fr;
-}
-@media (min-width: 768px) {
-.grid-cols-1.md\:grid-cols-2 {
-grid-template-columns: repeat(2, 1fr);
-}
+th {
+background-color: #f9fafb;
+font-weight: bold;
 }
 </style>
 </head>
@@ -315,25 +279,25 @@ grid-template-columns: repeat(2, 1fr);
 </div>
 </div>
 <nav class="p-3 space-y-1">
-<button onclick="showScreen('dashboard')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<button onclick="showScreen('dashboard')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
 <i class="fas fa-chart-line w-5"></i><span>لوحة التحكم</span>
 </button>
-<button onclick="showScreen('students')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<button onclick="showScreen('students')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
 <i class="fas fa-user-graduate w-5"></i><span>الطالبات</span>
 </button>
-<button onclick="showScreen('attendance')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<button onclick="showScreen('attendance')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
 <i class="fas fa-calendar-check w-5"></i><span>الغياب والتأخير</span>
 </button>
-<button onclick="showScreen('notes')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<button onclick="showScreen('notes')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
 <i class="fas fa-pen w-5"></i><span>ملاحظات المرشد</span>
 </button>
-<button onclick="showScreen('rewards')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<button onclick="showScreen('rewards')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
 <i class="fas fa-award w-5"></i><span>جوائز تحفيزية</span>
 </button>
-<button onclick="showScreen('reports')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<button onclick="showScreen('reports')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
 <i class="fas fa-file-alt w-5"></i><span>التقارير</span>
 </button>
-<button onclick="showScreen('settings')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<button onclick="showScreen('settings')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
 <i class="fas fa-cog w-5"></i><span>الإعدادات</span>
 </button>
 </nav>
@@ -363,29 +327,20 @@ grid-template-columns: repeat(2, 1fr);
 <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold text-gray-800" id="modalTitle">إضافة طالبة جديدة</h3><button onclick="closeModal('studentModal')" class="p-2 rounded-lg hover:bg-gray-100"><i class="fas fa-times text-gray-500"></i></button></div>
 <form id="studentForm" onsubmit="saveStudent(event)" class="grid grid-cols-1 gap-3">
 <input type="hidden" id="studentId">
-
-<div class="border-b pb-2 mb-2"><h4 class="font-bold text-purple-600">المعلومات الأساسية</h4></div>
 <div><label class="text-sm">الاسم الكامل *</label><input type="text" id="studentName" required class="w-full px-3 py-2 rounded-xl border text-sm"></div>
 <div><label class="text-sm">تاريخ الميلاد</label><input type="date" id="studentBirthDate" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
 <div><label class="text-sm">الصف *</label><select id="studentGrade" required class="w-full px-3 py-2 rounded-xl border text-sm"><option value="">اختر الصف</option><option>الأول الابتدائي</option><option>الثاني الابتدائي</option><option>الثالث الابتدائي</option><option>الرابع الابتدائي</option><option>الخامس الابتدائي</option><option>السادس الابتدائي</option><option>الأول المتوسط</option><option>الثاني المتوسط</option><option>الثالث المتوسط</option><option>الأول الثانوي</option><option>الثاني الثانوي</option><option>الثالث الثانوي</option></select></div>
-<div><label class="text-sm">الشعبة *</label><input type="text" id="studentSection" required class="w-full px-3 py-2 rounded-xl border text-sm" placeholder="مثال: أ، ب، ج"></div>
-
-<div class="border-b pb-2 mt-2 mb-2"><h4 class="font-bold text-purple-600">معلومات الأب</h4></div>
+<div><label class="text-sm">الشعبة *</label><input type="text" id="studentSection" required class="w-full px-3 py-2 rounded-xl border text-sm"></div>
 <div><label class="text-sm">اسم الأب</label><input type="text" id="studentFatherName" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
 <div><label class="text-sm">مهنة الأب</label><input type="text" id="studentFatherJob" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
-<div><label class="text-sm">رقم هاتف الأب</label><input type="tel" id="studentFatherPhone" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
-
-<div class="border-b pb-2 mt-2 mb-2"><h4 class="font-bold text-purple-600">معلومات الأم</h4></div>
+<div><label class="text-sm">هاتف الأب</label><input type="tel" id="studentFatherPhone" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
 <div><label class="text-sm">اسم الأم</label><input type="text" id="studentMotherName" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
 <div><label class="text-sm">مهنة الأم</label><input type="text" id="studentMotherJob" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
-<div><label class="text-sm">رقم هاتف الأم</label><input type="tel" id="studentMotherPhone" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
-
-<div class="border-b pb-2 mt-2 mb-2"><h4 class="font-bold text-purple-600">المستوى العلمي والسلوك</h4></div>
-<div><label class="text-sm">المستوى العلمي *</label><select id="studentAcademicLevel" required class="w-full px-3 py-2 rounded-xl border text-sm"><option value="excellent">ممتاز (95-100)</option><option value="verygood">جيد جداً (85-94)</option><option value="good">جيد (75-84)</option><option value="average">متوسط (65-74)</option><option value="weak">ضعيف (أقل من 65)</option></select></div>
+<div><label class="text-sm">هاتف الأم</label><input type="tel" id="studentMotherPhone" class="w-full px-3 py-2 rounded-xl border text-sm"></div>
+<div><label class="text-sm">المستوى العلمي *</label><select id="studentAcademicLevel" required class="w-full px-3 py-2 rounded-xl border text-sm"><option value="excellent">ممتاز</option><option value="verygood">جيد جدا</option><option value="good">جيد</option><option value="average">متوسط</option><option value="weak">ضعيف</option></select></div>
 <div><label class="text-sm">السلوك *</label><select id="studentBehavior" required class="w-full px-3 py-2 rounded-xl border text-sm"><option value="excellent">ممتاز</option><option value="good">جيد</option><option value="average">متوسط</option><option value="needs_improvement">يحتاج تحسين</option></select></div>
-<div><label class="text-sm">ملاحظات إضافية</label><textarea id="studentNotes" rows="2" class="w-full px-3 py-2 rounded-xl border text-sm"></textarea></div>
-
-<div class="flex justify-end gap-3 mt-3"><button type="button" onclick="closeModal('studentModal')" class="px-4 py-2 rounded-xl border text-sm">إلغاء</button><button type="submit" class="btn-primary px-4 py-2 rounded-xl text-white text-sm"><i class="fas fa-save ml-2"></i> حفظ</button></div>
+<div><label class="text-sm">ملاحظات</label><textarea id="studentNotes" rows="2" class="w-full px-3 py-2 rounded-xl border text-sm"></textarea></div>
+<div class="flex justify-end gap-3 mt-3"><button type="button" onclick="closeModal('studentModal')" class="px-4 py-2 rounded-xl border text-sm">إلغاء</button><button type="submit" class="btn-primary px-4 py-2 rounded-xl text-white text-sm">حفظ</button></div>
 </form>
 </div>
 </div>
@@ -394,10 +349,9 @@ grid-template-columns: repeat(2, 1fr);
 <div id="attendanceModal" class="modal">
 <div class="glass rounded-2xl p-4 w-full max-w-[95%] mx-2"><h3 class="text-lg font-bold mb-3">تسجيل الغياب والتأخير</h3>
 <form id="attendanceForm" onsubmit="saveAttendanceRecord(event)">
-<div><label class="text-sm">الطالبة *</label><select id="attStudentId" required class="w-full p-2 border rounded-xl mb-2 text-sm"><option value="">اختر الطالبة</option></select></div>
+<div><label class="text-sm">الطالبة</label><select id="attStudentId" required class="w-full p-2 border rounded-xl mb-2 text-sm"><option value="">اختر الطالبة</option></select></div>
 <div><label class="text-sm">التاريخ</label><input type="date" id="attDate" required class="w-full p-2 border rounded-xl mb-2 text-sm"></div>
-<div><label class="text-sm">نوع السجل</label><select id="attType" required class="w-full p-2 border rounded-xl mb-2 text-sm"><option value="absent">غياب</option><option value="late">تأخير</option><option value="excused">غياب بعذر</option></select></div>
-<div><label class="text-sm">عدد الدقائق (للتأخير)</label><input type="number" id="attMinutes" class="w-full p-2 border rounded-xl mb-2 text-sm"></div>
+<div><label class="text-sm">النوع</label><select id="attType" required class="w-full p-2 border rounded-xl mb-2 text-sm"><option value="absent">غياب</option><option value="late">تأخير</option><option value="excused">غياب بعذر</option></select></div>
 <div><label class="text-sm">السبب</label><textarea id="attReason" rows="2" class="w-full p-2 border rounded-xl mb-2 text-sm"></textarea></div>
 <div class="flex gap-2"><button type="button" onclick="closeModal('attendanceModal')" class="flex-1 py-2 border rounded-xl text-sm">إلغاء</button><button type="submit" class="flex-1 btn-primary py-2 rounded-xl text-white text-sm">حفظ</button></div>
 </form></div>
@@ -408,15 +362,14 @@ grid-template-columns: repeat(2, 1fr);
 <div class="glass rounded-2xl p-4 w-full max-w-[95%] mx-2"><h3 class="text-lg font-bold mb-3">إضافة ملاحظة</h3>
 <form id="noteForm" onsubmit="saveNote(event)"><input type="hidden" id="noteStudentId"><div><label class="text-sm">الطالبة</label><input type="text" id="noteStudentName" readonly class="w-full p-2 border rounded-xl mb-2 bg-gray-100 text-sm"></div>
 <div><label class="text-sm">الملاحظة</label><textarea id="noteText" required rows="3" class="w-full p-2 border rounded-xl mb-2 text-sm"></textarea></div>
-<div><label class="text-sm">نوع الملاحظة</label><select id="noteType" class="w-full p-2 border rounded-xl mb-2 text-sm"><option value="positive">إيجابية (تشجيعية)</option><option value="warning">تنبيه</option><option value="parent_contact">تواصل مع ولي الأمر</option></select></div>
+<div><label class="text-sm">النوع</label><select id="noteType" class="w-full p-2 border rounded-xl mb-2 text-sm"><option value="positive">إيجابية</option><option value="warning">تنبيه</option><option value="parent_contact">تواصل مع ولي الأمر</option></select></div>
 <div class="flex gap-2"><button type="button" onclick="closeModal('noteModal')" class="flex-1 py-2 border rounded-xl text-sm">إلغاء</button><button type="submit" class="flex-1 btn-primary py-2 rounded-xl text-white text-sm">حفظ</button></div></form></div>
 </div>
 
 <!-- Reward Modal -->
 <div id="rewardModal" class="modal">
-<div class="glass rounded-2xl p-4 w-full max-w-[95%] mx-2"><h3 class="text-lg font-bold mb-3">إضافة جائزة تحفيزية</h3>
+<div class="glass rounded-2xl p-4 w-full max-w-[95%] mx-2"><h3 class="text-lg font-bold mb-3">إضافة جائزة</h3>
 <form id="rewardForm" onsubmit="saveReward(event)"><input type="hidden" id="rewardStudentId"><div><label class="text-sm">الطالبة</label><input type="text" id="rewardStudentName" readonly class="w-full p-2 border rounded-xl mb-2 bg-gray-100 text-sm"></div>
-<div><label class="text-sm">نوع الجائزة</label><select id="rewardType" required class="w-full p-2 border rounded-xl mb-2 text-sm"><option value="certificate">شهادة تقدير</option><option value="gift">هدية رمزية</option><option value="star">نجمة التميز</option><option value="letter">خطاب شكر لولي الأمر</option></select></div>
 <div><label class="text-sm">السبب</label><textarea id="rewardReason" required rows="2" class="w-full p-2 border rounded-xl mb-2 text-sm"></textarea></div>
 <div><label class="text-sm">التاريخ</label><input type="date" id="rewardDate" required class="w-full p-2 border rounded-xl mb-2 text-sm"></div>
 <div class="flex gap-2"><button type="button" onclick="closeModal('rewardModal')" class="flex-1 py-2 border rounded-xl text-sm">إلغاء</button><button type="submit" class="flex-1 btn-primary py-2 rounded-xl text-white text-sm">حفظ</button></div></form></div>
@@ -425,7 +378,7 @@ grid-template-columns: repeat(2, 1fr);
 <!-- Report Modal -->
 <div id="reportModal" class="modal">
 <div class="glass rounded-2xl p-4 w-full max-w-[95%] mx-2 max-h-[90vh] overflow-y-auto">
-<div class="flex justify-between items-center mb-4 no-print flex-wrap gap-2"><h3 class="text-lg font-bold text-gray-800">تقرير الطالبة الشامل</h3><div class="flex gap-2"><button onclick="exportReportToPDF()" class="btn-primary px-3 py-1 rounded-lg text-white text-sm"><i class="fas fa-file-pdf ml-1"></i> PDF</button><button onclick="closeModal('reportModal')" class="p-2 rounded-lg hover:bg-gray-100"><i class="fas fa-times text-gray-500"></i></button></div></div>
+<div class="flex justify-between items-center mb-4 no-print flex-wrap gap-2"><h3 class="text-lg font-bold text-gray-800">تقرير الطالبة</h3><div class="flex gap-2"><button onclick="exportReportToPDF()" class="btn-primary px-3 py-1 rounded-lg text-white text-sm">PDF</button><button onclick="closeModal('reportModal')" class="p-2 rounded-lg hover:bg-gray-100"><i class="fas fa-times"></i></button></div></div>
 <div id="reportContent"></div>
 </div>
 </div>
@@ -437,7 +390,6 @@ let students = JSON.parse(localStorage.getItem('counselor_students')) || [];
 let attendanceRecords = JSON.parse(localStorage.getItem('counselor_attendance')) || [];
 let notes = JSON.parse(localStorage.getItem('counselor_notes')) || [];
 let rewards = JSON.parse(localStorage.getItem('counselor_rewards')) || [];
-let auditLog = JSON.parse(localStorage.getItem('counselor_auditLog')) || [];
 
 let currentScreen = 'dashboard';
 let screenHistory = [];
@@ -454,16 +406,16 @@ const behaviorLabels = {
 };
 
 const academicLabels = {
-  excellent: 'ممتاز (95-100)',
-  verygood: 'جيد جداً (85-94)',
-  good: 'جيد (75-84)',
-  average: 'متوسط (65-74)',
-  weak: 'ضعيف (أقل من 65)'
+  excellent: 'ممتاز',
+  verygood: 'جيد جدا',
+  good: 'جيد',
+  average: 'متوسط',
+  weak: 'ضعيف'
 };
 
 const monthNames = {
-  1: 'كانون الثاني', 2: 'شباط', 3: 'آذار', 4: 'نيسان', 5: 'أيار', 6: 'حزيران',
-  7: 'تموز', 8: 'آب', 9: 'أيلول', 10: 'تشرين الأول', 11: 'تشرين الثاني', 12: 'كانون الأول'
+  1: 'يناير', 2: 'فبراير', 3: 'مارس', 4: 'أبريل', 5: 'مايو', 6: 'يونيو',
+  7: 'يوليو', 8: 'أغسطس', 9: 'سبتمبر', 10: 'أكتوبر', 11: 'نوفمبر', 12: 'ديسمبر'
 };
 
 function saveAllData() {
@@ -471,13 +423,6 @@ function saveAllData() {
   localStorage.setItem('counselor_attendance', JSON.stringify(attendanceRecords));
   localStorage.setItem('counselor_notes', JSON.stringify(notes));
   localStorage.setItem('counselor_rewards', JSON.stringify(rewards));
-  localStorage.setItem('counselor_auditLog', JSON.stringify(auditLog));
-}
-
-function addAuditLog(action, details) {
-  auditLog.unshift({ id: Date.now(), user: currentUser?.name || 'زينب', action: action, details: details, timestamp: new Date().toLocaleString('ar-SA') });
-  if (auditLog.length > 500) auditLog.pop();
-  saveAllData();
 }
 
 function closeModal(modalId) {
@@ -502,33 +447,31 @@ function goBack() {
 function formatDate(dateStr) {
   if (!dateStr) return '-';
   const d = new Date(dateStr);
-  return `${d.getDate()} ${monthNames[d.getMonth() + 1]} ${d.getFullYear()}`;
+  return d.getDate() + ' ' + monthNames[d.getMonth() + 1] + ' ' + d.getFullYear();
 }
 
 function formatBirthDate(dateStr) {
   if (!dateStr) return '-';
   const d = new Date(dateStr);
-  return `${d.getDate()} / ${monthNames[d.getMonth() + 1]} / ${d.getFullYear()}`;
+  return d.getDate() + ' / ' + monthNames[d.getMonth() + 1] + ' / ' + d.getFullYear();
 }
 
 function handleLogin() {
   const username = document.getElementById('loginUsername').value;
   const password = document.getElementById('loginPassword').value;
   if (username === 'زينب' && password === '1234') {
-    currentUser = { id: 1, username: 'زينب', name: 'زينب', role: 'admin', roleName: 'مرشدة طلابية' };
-  } else { alert('اسم المستخدم أو كلمة المرور غير صحيحة'); return; }
+    currentUser = { id: 1, name: 'زينب', roleName: 'مرشدة طلابية' };
+  } else { alert('خطأ في اسم المستخدم أو كلمة المرور'); return; }
   document.getElementById('loginScreen').classList.add('hidden');
   document.getElementById('mainApp').classList.remove('hidden');
   document.getElementById('currentUserName').textContent = currentUser.name;
   document.getElementById('currentUserRole').textContent = currentUser.roleName;
   document.getElementById('userRoleDisplay').textContent = currentUser.roleName;
   if (students.length === 0) generateSampleData();
-  addAuditLog('تسجيل دخول', 'تم تسجيل الدخول');
   showScreen('dashboard');
 }
 
 function logout() {
-  addAuditLog('تسجيل خروج', 'تم تسجيل الخروج');
   currentUser = null;
   document.getElementById('mainApp').classList.add('hidden');
   document.getElementById('loginScreen').classList.remove('hidden');
@@ -536,20 +479,20 @@ function logout() {
 
 function generateSampleData() {
   students = [
-    { id: 1, name: 'سارة أحمد محمد', birthDate: '2010-05-15', grade: 'الثالث المتوسط', section: 'أ', fatherName: 'أحمد محمد', fatherJob: 'مهندس', fatherPhone: '0501111111', motherName: 'فاطمة علي', motherJob: 'معلمة', motherPhone: '0502222222', academicLevel: 'excellent', behavior: 'excellent', notes: 'متميزة', status: 'active' },
-    { id: 2, name: 'نورة خالد سعد', birthDate: '2011-03-20', grade: 'الثالث المتوسط', section: 'أ', fatherName: 'خالد سعد', fatherJob: 'طبيب', fatherPhone: '0503333333', motherName: 'منى إبراهيم', motherJob: 'ربة منزل', motherPhone: '0504444444', academicLevel: 'verygood', behavior: 'good', notes: 'تحتاج تشجيع', status: 'active' },
-    { id: 3, name: 'ريم عبدالله فهد', birthDate: '2010-11-10', grade: 'الثالث المتوسط', section: 'ب', fatherName: 'عبدالله فهد', fatherJob: 'موظف', fatherPhone: '0505555555', motherName: 'نوال سعد', motherJob: 'ممرضة', motherPhone: '0506666666', academicLevel: 'good', behavior: 'average', notes: 'متابعة', status: 'active' },
-    { id: 4, name: 'ليان عمر إبراهيم', birthDate: '2009-07-25', grade: 'الثاني الثانوي', section: 'أ', fatherName: 'عمر إبراهيم', fatherJob: 'أستاذ جامعي', fatherPhone: '0507777777', motherName: 'هناء محمود', motherJob: 'دكتورة', motherPhone: '0508888888', academicLevel: 'excellent', behavior: 'excellent', notes: 'قائدة', status: 'active' }
+    { id: 1, name: 'سارة أحمد محمد', birthDate: '2010-05-15', grade: 'الثالث المتوسط', section: 'أ', fatherName: 'أحمد محمد', fatherJob: 'مهندس', fatherPhone: '0501111111', motherName: 'فاطمة علي', motherJob: 'معلمة', motherPhone: '0502222222', academicLevel: 'excellent', behavior: 'excellent', notes: 'متميزة' },
+    { id: 2, name: 'نورة خالد سعد', birthDate: '2011-03-20', grade: 'الثالث المتوسط', section: 'أ', fatherName: 'خالد سعد', fatherJob: 'طبيب', fatherPhone: '0503333333', motherName: 'منى إبراهيم', motherJob: 'ربة منزل', motherPhone: '0504444444', academicLevel: 'verygood', behavior: 'good', notes: 'تحتاج تشجيع' },
+    { id: 3, name: 'ريم عبدالله فهد', birthDate: '2010-11-10', grade: 'الثالث المتوسط', section: 'ب', fatherName: 'عبدالله فهد', fatherJob: 'موظف', fatherPhone: '0505555555', motherName: 'نوال سعد', motherJob: 'ممرضة', motherPhone: '0506666666', academicLevel: 'good', behavior: 'average', notes: 'متابعة' },
+    { id: 4, name: 'ليان عمر إبراهيم', birthDate: '2009-07-25', grade: 'الثاني الثانوي', section: 'أ', fatherName: 'عمر إبراهيم', fatherJob: 'أستاذ', fatherPhone: '0507777777', motherName: 'هناء محمود', motherJob: 'دكتورة', motherPhone: '0508888888', academicLevel: 'excellent', behavior: 'excellent', notes: 'قائدة' }
   ];
   attendanceRecords = [
-    { id: 1, studentId: 3, date: '2024-04-20', type: 'absent', minutes: 0, reason: 'مرض' },
-    { id: 2, studentId: 2, date: '2024-04-21', type: 'late', minutes: 15, reason: 'ازدحام' },
-    { id: 3, studentId: 3, date: '2024-04-22', type: 'absent', minutes: 0, reason: 'ظرف' },
-    { id: 4, studentId: 1, date: '2024-04-23', type: 'excused', minutes: 0, reason: 'طبيب' }
+    { id: 1, studentId: 3, date: '2024-04-20', type: 'absent', reason: 'مرض' },
+    { id: 2, studentId: 2, date: '2024-04-21', type: 'late', reason: 'ازدحام' },
+    { id: 3, studentId: 3, date: '2024-04-22', type: 'absent', reason: 'ظرف' },
+    { id: 4, studentId: 1, date: '2024-04-23', type: 'excused', reason: 'طبيب' }
   ];
   notes = [
     { id: 1, studentId: 2, text: 'تم التواصل مع ولي الأمر', type: 'parent_contact', date: '2024-04-15' },
-    { id: 2, studentId: 1, text: 'شكراً لمشاركتها', type: 'positive', date: '2024-04-10' },
+    { id: 2, studentId: 1, text: 'شكرا لمشاركتها', type: 'positive', date: '2024-04-10' },
     { id: 3, studentId: 3, text: 'تنبيه: تكرار الغياب', type: 'warning', date: '2024-04-25' }
   ];
   rewards = [
@@ -563,14 +506,14 @@ function showScreen(screen, pushHistory = true) {
   if (pushHistory && currentScreen !== screen) screenHistory.push(currentScreen);
   currentScreen = screen;
   document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
-  const screenMap = { 'dashboard': 0, 'students': 1, 'attendance': 2, 'notes': 3, 'rewards': 4, 'reports': 5, 'settings': 6 };
   const items = document.querySelectorAll('.sidebar-item');
-  if (items[screenMap[screen]]) items[screenMap[screen]].classList.add('active');
+  const index = { 'dashboard': 0, 'students': 1, 'attendance': 2, 'notes': 3, 'rewards': 4, 'reports': 5, 'settings': 6 };
+  if (items[index[screen]]) items[index[screen]].classList.add('active');
   const backBtn = document.getElementById('backButton');
   if (screenHistory.length > 0) backBtn.classList.remove('hidden');
   else backBtn.classList.add('hidden');
-  const titles = { 'dashboard': 'لوحة التحكم', 'students': 'الطالبات', 'attendance': 'الغياب والتأخير', 'notes': 'ملاحظات المرشد', 'rewards': 'الجوائز التحفيزية', 'reports': 'التقارير', 'settings': 'الإعدادات' };
-  document.getElementById('pageTitle').textContent = titles[screen] || '';
+  const titles = { 'dashboard': 'لوحة التحكم', 'students': 'الطالبات', 'attendance': 'الغياب والتأخير', 'notes': 'ملاحظات المرشد', 'rewards': 'الجوائز', 'reports': 'التقارير', 'settings': 'الإعدادات' };
+  document.getElementById('pageTitle').textContent = titles[screen];
   const container = document.getElementById('contentArea');
   container.innerHTML = '';
   if(screen === 'dashboard') renderDashboard(container);
@@ -593,16 +536,16 @@ function renderDashboard(container) {
   const totalLates = attendanceRecords.filter(a => a.type === 'late').length;
   const recentNotes = notes.slice(-5).reverse();
   
-  container.innerHTML = `<div class="fade-in space-y-4 dashboard-scroll">
-    <div class="grid grid-cols-2 gap-3">
-      <div class="glass rounded-2xl p-3 text-center"><p class="text-gray-500 text-xs">الطالبات</p><h3 class="text-xl font-bold text-purple-600">${totalStudents}</h3></div>
-      <div class="glass rounded-2xl p-3 text-center"><p class="text-gray-500 text-xs">سلوك ممتاز</p><h3 class="text-xl font-bold text-green-600">${excellentBehavior}</h3></div>
-      <div class="glass rounded-2xl p-3 text-center"><p class="text-gray-500 text-xs">الغياب</p><h3 class="text-xl font-bold text-red-600">${totalAbsences}</h3></div>
-      <div class="glass rounded-2xl p-3 text-center"><p class="text-gray-500 text-xs">التأخير</p><h3 class="text-xl font-bold text-orange-600">${totalLates}</h3></div>
-    </div>
-    <div class="glass rounded-2xl p-3"><canvas id="behaviorChart" style="max-height:180px"></canvas></div>
-    <div class="glass rounded-2xl p-3"><h3 class="font-bold mb-2 text-sm">آخر الملاحظات</h3>${recentNotes.map(n => { const s = students.find(st => st.id === n.studentId); return `<div class="note-card p-2 rounded-lg mb-2 text-sm"><div class="flex justify-between"><span class="font-bold">${s?.name || 'طالبة'}</span><span class="text-xs">${n.date}</span></div><p>${n.text}</p></div>`; }).join('') || '<div class="empty-message text-xs">لا توجد ملاحظات</div>'}</div>
-  </div>`;
+  container.innerHTML = '<div class="fade-in space-y-4 dashboard-scroll">' +
+    '<div class="grid grid-cols-2 gap-3">' +
+      '<div class="glass rounded-2xl p-3 text-center"><p class="text-gray-500 text-xs">الطالبات</p><h3 class="text-xl font-bold text-purple-600">' + totalStudents + '</h3></div>' +
+      '<div class="glass rounded-2xl p-3 text-center"><p class="text-gray-500 text-xs">سلوك ممتاز</p><h3 class="text-xl font-bold text-green-600">' + excellentBehavior + '</h3></div>' +
+      '<div class="glass rounded-2xl p-3 text-center"><p class="text-gray-500 text-xs">الغياب</p><h3 class="text-xl font-bold text-red-600">' + totalAbsences + '</h3></div>' +
+      '<div class="glass rounded-2xl p-3 text-center"><p class="text-gray-500 text-xs">التأخير</p><h3 class="text-xl font-bold text-orange-600">' + totalLates + '</h3></div>' +
+    '</div>' +
+    '<div class="glass rounded-2xl p-3"><canvas id="behaviorChart" style="max-height:180px"></canvas></div>' +
+    '<div class="glass rounded-2xl p-3"><h3 class="font-bold mb-2 text-sm">آخر الملاحظات</h3>' + recentNotes.map(n => { const s = students.find(st => st.id === n.studentId); return '<div class="note-card p-2 rounded-lg mb-2 text-sm"><div class="flex justify-between"><span class="font-bold">' + (s?.name || 'طالبة') + '</span><span class="text-xs">' + n.date + '</span></div><p>' + n.text + '</p></div>'; }).join('') || '<div class="empty-message text-xs">لا توجد ملاحظات</div>' + '</div>' +
+  '</div>';
   setTimeout(() => { new Chart(document.getElementById('behaviorChart'), { type: 'doughnut', data: { labels: ['ممتاز', 'جيد', 'متوسط', 'يحتاج تحسين'], datasets: [{ data: [excellentBehavior, goodBehavior, averageBehavior, needsImprovement], backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444'] }] }, options: { responsive: true } }); }, 100);
 }
 
@@ -613,13 +556,13 @@ function renderStudentsTable() {
   if (currentBehaviorFilter) filtered = filtered.filter(s => s.behavior === currentBehaviorFilter);
   const tbody = document.getElementById('studentsTableBody');
   if (!tbody) return;
-  tbody.innerHTML = filtered.map(s => `<tr class="hover:bg-gray-50 border-b"><td class="p-2 text-sm">${s.name}</td><td class="p-2 text-sm">${s.grade}</td><td class="p-2 text-sm">${s.section}</td><td class="p-2"><span class="status-badge text-xs">${academicLabels[s.academicLevel]}</span></td><td class="p-2"><span class="status-badge ${behaviorLabels[s.behavior].class} text-xs">${behaviorLabels[s.behavior].name}</span></td><td class="p-2"><div class="flex gap-1"><button onclick="editStudent(${s.id})" class="p-1 text-blue-500"><i class="fas fa-edit"></i></button><button onclick="deleteStudent(${s.id})" class="p-1 text-red-500"><i class="fas fa-trash"></i></button></div></td></td>`).join('');
-  if (filtered.length === 0) tbody.innerHTML = '<tr><td colspan="6" class="empty-message text-center p-4">لا توجد طالبات络脉络脉</tr>';
+  tbody.innerHTML = filtered.map(s => '<tr><td class="p-2 text-sm">' + s.name + '</td><td class="p-2 text-sm">' + s.grade + '</td><td class="p-2 text-sm">' + s.section + '</td><td class="p-2"><span class="status-badge text-xs">' + academicLabels[s.academicLevel] + '</span></td><td class="p-2"><span class="status-badge ' + behaviorLabels[s.behavior].class + ' text-xs">' + behaviorLabels[s.behavior].name + '</span></td><td class="p-2"><div class="flex gap-1"><button onclick="editStudent(' + s.id + ')" class="p-1 text-blue-500"><i class="fas fa-edit"></i></button><button onclick="deleteStudent(' + s.id + ')" class="p-1 text-red-500"><i class="fas fa-trash"></i></button></div></td></tr>').join('');
+  if (filtered.length === 0) tbody.innerHTML = '<tr><td colspan="6" class="empty-message text-center p-4">لا توجد طالبات</td></tr>';
 }
 
 function renderStudents(container) {
   const grades = [...new Set(students.map(s => s.grade))];
-  container.innerHTML = `<div class="space-y-3"><div class="flex flex-wrap gap-2"><div class="flex-1"><input type="text" id="studentSearchInput" placeholder="بحث..." value="${currentSearchTerm}" class="w-full p-2 rounded-xl border text-sm"></div><select id="gradeFilter" class="p-2 rounded-xl border text-sm flex-1"><option value="">كل الصفوف</option>${grades.map(g => `<option value="${g}">${g}</option>`).join('')}</select><select id="behaviorFilter" class="p-2 rounded-xl border text-sm flex-1"><option value="">السلوك</option><option value="excellent">ممتاز</option><option value="good">جيد</option><option value="average">متوسط</option><option value="needs_improvement">يحتاج تحسين</option></select><button onclick="openStudentModal()" class="btn-primary px-3 py-2 rounded-xl text-white text-sm"><i class="fas fa-plus"></i> إضافة</button></div><div class="glass rounded-2xl overflow-x-auto"><table class="w-full"><thead><tr><th class="p-2 text-right text-sm">الاسم</th><th class="p-2 text-right text-sm">الصف</th><th class="p-2 text-right text-sm">الشعبة</th><th class="p-2 text-right text-sm">المستوى</th><th class="p-2 text-right text-sm">السلوك</th><th class="p-2 text-right text-sm">إجراءات</th></tr></thead><tbody id="studentsTableBody"></tbody></table></div></div>`;
+  container.innerHTML = '<div class="space-y-3"><div class="flex flex-wrap gap-2"><div class="flex-1"><input type="text" id="studentSearchInput" placeholder="بحث..." value="' + currentSearchTerm + '" class="w-full p-2 rounded-xl border text-sm"></div><select id="gradeFilter" class="p-2 rounded-xl border text-sm flex-1"><option value="">كل الصفوف</option>' + grades.map(g => '<option value="' + g + '">' + g + '</option>').join('') + '</select><select id="behaviorFilter" class="p-2 rounded-xl border text-sm flex-1"><option value="">السلوك</option><option value="excellent">ممتاز</option><option value="good">جيد</option><option value="average">متوسط</option><option value="needs_improvement">يحتاج تحسين</option></select><button onclick="openStudentModal()" class="btn-primary px-3 py-2 rounded-xl text-white text-sm"><i class="fas fa-plus"></i> إضافة</button></div><div class="glass rounded-2xl overflow-x-auto"><table class="w-full"><thead><tr><th class="p-2 text-right text-sm">الاسم</th><th class="p-2 text-right text-sm">الصف</th><th class="p-2 text-right text-sm">الشعبة</th><th class="p-2 text-right text-sm">المستوى</th><th class="p-2 text-right text-sm">السلوك</th><th class="p-2 text-right text-sm">إجراءات</th></tr></thead><tbody id="studentsTableBody"></tbody></table></div></div>';
   document.getElementById('studentSearchInput').addEventListener('input', (e) => { currentSearchTerm = e.target.value; renderStudentsTable(); });
   document.getElementById('gradeFilter').addEventListener('change', (e) => { currentGradeFilter = e.target.value; renderStudentsTable(); });
   document.getElementById('behaviorFilter').addEventListener('change', (e) => { currentBehaviorFilter = e.target.value; renderStudentsTable(); });
@@ -670,8 +613,7 @@ function saveStudent(e) {
     motherPhone: document.getElementById('studentMotherPhone').value,
     academicLevel: document.getElementById('studentAcademicLevel').value, 
     behavior: document.getElementById('studentBehavior').value, 
-    notes: document.getElementById('studentNotes').value, 
-    status: 'active' 
+    notes: document.getElementById('studentNotes').value
   }; 
   if(id) { const idx = students.findIndex(s => s.id === parseInt(id)); if(idx !== -1) students[idx] = data; } 
   else students.push(data); 
@@ -684,30 +626,38 @@ function deleteStudent(id) { if(confirm('هل أنت متأكدة من الحذ�
 
 function renderAttendance(container) {
   let filtered = attendanceRecords;
-  container.innerHTML = `<div class="space-y-3"><div class="flex gap-2"><input type="date" id="attFilterDate" onchange="filterAttendanceByDate(this.value)" class="p-2 rounded-xl border text-sm flex-1"><button onclick="openAttendanceModal()" class="btn-primary px-3 py-2 rounded-xl text-white text-sm">تسجيل</button></div><div class="glass rounded-2xl overflow-x-auto"><table class="w-full"><thead><tr><th class="p-2">الطالبة</th><th class="p-2">النوع</th><th class="p-2">التاريخ</th><th class="p-2">السبب</th><th class="p-2"></th></td></thead><tbody>${filtered.map(a => { const s = students.find(st => st.id === a.studentId); return `<tr><td class="p-2 text-sm">${s?.name || '-'}</td><td class="p-2"><span class="status-badge text-xs">${a.type === 'absent' ? 'غياب' : a.type === 'late' ? 'تأخير' : 'بعذر'}</span></td><td class="p-2 text-sm">${a.date}</td><td class="p-2 text-sm">${a.reason || '-'}</td><td class="p-2"><button onclick="deleteAttendance(${a.id})" class="text-red-500"><i class="fas fa-trash"></i></button></td></tr>`; }).join('')}</tbody>}</div></div>`;
+  container.innerHTML = '<div class="space-y-3"><div class="flex gap-2"><input type="date" id="attFilterDate" onchange="filterAttendanceByDate(this.value)" class="p-2 rounded-xl border text-sm flex-1"><button onclick="openAttendanceModal()" class="btn-primary px-3 py-2 rounded-xl text-white text-sm">تسجيل</button></div><div class="glass rounded-2xl overflow-x-auto"><table class="w-full"><thead><tr><th class="p-2">الطالبة</th><th class="p-2">النوع</th><th class="p-2">التاريخ</th><th class="p-2">السبب</th><th class="p-2"></th></tr></thead><tbody>' + filtered.map(a => { const s = students.find(st => st.id === a.studentId); return '<tr><td class="p-2 text-sm">' + (s?.name || '-') + '</td><td class="p-2"><span class="status-badge text-xs">' + (a.type === 'absent' ? 'غياب' : a.type === 'late' ? 'تأخير' : 'بعذر') + '</span></td><td class="p-2 text-sm">' + a.date + '</td><td class="p-2 text-sm">' + (a.reason || '-') + '</td><td class="p-2"><button onclick="deleteAttendance(' + a.id + ')" class="text-red-500"><i class="fas fa-trash"></i></button></td></tr>'; }).join('') + '</tbody></table></div></div>';
 }
 function filterAttendanceByDate(date) { renderAttendance(document.getElementById('contentArea')); }
-function openAttendanceModal() { document.getElementById('attStudentId').innerHTML = '<option value="">اختر الطالبة</option>' + students.map(s => `<option value="${s.id}">${s.name}</option>`); document.getElementById('attDate').value = new Date().toISOString().split('T')[0]; document.getElementById('attendanceModal').classList.add('show'); }
-function saveAttendanceRecord(e) { e.preventDefault(); const studentId = parseInt(document.getElementById('attStudentId').value); if(!studentId) { alert('اختر الطالبة'); return; } attendanceRecords.push({ id: Date.now(), studentId, date: document.getElementById('attDate').value, type: document.getElementById('attType').value, minutes: parseInt(document.getElementById('attMinutes').value)||0, reason: document.getElementById('attReason').value }); saveAllData(); closeModal('attendanceModal'); renderAttendance(document.getElementById('contentArea')); }
+function openAttendanceModal() { document.getElementById('attStudentId').innerHTML = '<option value="">اختر الطالبة</option>' + students.map(s => '<option value="' + s.id + '">' + s.name + '</option>'); document.getElementById('attDate').value = new Date().toISOString().split('T')[0]; document.getElementById('attendanceModal').classList.add('show'); }
+function saveAttendanceRecord(e) { e.preventDefault(); const studentId = parseInt(document.getElementById('attStudentId').value); if(!studentId) { alert('اختر الطالبة'); return; } attendanceRecords.push({ id: Date.now(), studentId, date: document.getElementById('attDate').value, type: document.getElementById('attType').value, reason: document.getElementById('attReason').value }); saveAllData(); closeModal('attendanceModal'); renderAttendance(document.getElementById('contentArea')); }
 function deleteAttendance(id) { if(confirm('حذف السجل؟')) { attendanceRecords = attendanceRecords.filter(a => a.id !== id); saveAllData(); renderAttendance(document.getElementById('contentArea')); } }
 
 function renderNotes(container) {
-  container.innerHTML = `<div class="space-y-3"><div class="grid grid-cols-1 gap-3">${students.map(s => `<div class="glass rounded-2xl p-3"><div class="flex justify-between"><div><h4 class="font-bold text-sm">${s.name}</h4><p class="text-xs text-gray-500">${s.grade}</p></div><button onclick="openNoteModal(${s.id},'${s.name}')" class="btn-primary px-2 py-1 rounded-lg text-white text-xs">+ ملاحظة</button></div><div class="mt-2 space-y-1">${notes.filter(n => n.studentId === s.id).map(n => `<div class="note-card p-1 rounded text-xs"><div class="flex justify-between"><span>${n.date}</span><span class="${n.type === 'positive' ? 'text-green-600' : 'text-orange-600'}">${n.type === 'positive' ? 'إيجابية' : 'تنبيه'}</span></div><p>${n.text}</p><button onclick="deleteNote(${n.id})" class="text-red-500 text-xs">حذف</button></div>`).join('') || '<div class="empty-message text-xs">لا توجد ملاحظات</div>'}</div></div>`).join('')}</div></div>`;
+  container.innerHTML = '<div class="space-y-3"><div class="grid grid-cols-1 gap-3">' + students.map(s => '<div class="glass rounded-2xl p-3"><div class="flex justify-between"><div><h4 class="font-bold text-sm">' + s.name + '</h4><p class="text-xs text-gray-500">' + s.grade + '</p></div><button onclick="openNoteModal(' + s.id + ',\'' + s.name + '\')" class="btn-primary px-2 py-1 rounded-lg text-white text-xs">+ ملاحظة</button></div><div class="mt-2 space-y-1">' + notes.filter(n => n.studentId === s.id).map(n => '<div class="note-card p-1 rounded text-xs"><div class="flex justify-between"><span>' + n.date + '</span><span class="' + (n.type === 'positive' ? 'text-green-600' : 'text-orange-600') + '">' + (n.type === 'positive' ? 'إيجابية' : 'تنبيه') + '</span></div><p>' + n.text + '</p><button onclick="deleteNote(' + n.id + ')" class="text-red-500 text-xs">حذف</button></div>').join('') || '<div class="empty-message text-xs">لا توجد ملاحظات</div>' + '</div></div>').join('') + '</div></div>';
 }
 function openNoteModal(id, name) { document.getElementById('noteStudentId').value = id; document.getElementById('noteStudentName').value = name; document.getElementById('noteModal').classList.add('show'); }
 function saveNote(e) { e.preventDefault(); notes.push({ id: Date.now(), studentId: parseInt(document.getElementById('noteStudentId').value), text: document.getElementById('noteText').value, type: document.getElementById('noteType').value, date: new Date().toLocaleDateString('ar-EG') }); saveAllData(); closeModal('noteModal'); renderNotes(document.getElementById('contentArea')); }
 function deleteNote(id) { if(confirm('حذف الملاحظة؟')) { notes = notes.filter(n => n.id !== id); saveAllData(); renderNotes(document.getElementById('contentArea')); } }
 
 function renderRewards(container) {
-  container.innerHTML = `<div class="space-y-3"><div class="grid grid-cols-1 gap-3">${students.map(s => `<div class="glass rounded-2xl p-3"><div class="flex justify-between"><div><h4 class="font-bold text-sm">${s.name}</h4><p class="text-xs text-gray-500">${s.grade}</p></div><button onclick="openRewardModal(${s.id},'${s.name}')" class="btn-primary px-2 py-1 rounded-lg text-white text-xs">+ منح</button></div><div class="mt-2">${rewards.filter(r => r.studentId === s.id).map(r => `<div class="flex items-center gap-2 p-1 border-b"><i class="fas fa-trophy text-yellow-600 text-sm"></i><div><p class="text-xs">${r.reason}</p><p class="text-xs text-gray-500">${r.date}</p></div><button onclick="deleteReward(${r.id})" class="text-red-500 text-xs">حذف</button></div>`).join('') || '<div class="empty-message text-xs">لا توجد جوائز</div>'}</div></div>`).join('')}</div></div>`;
+  container.innerHTML = '<div class="space-y-3"><div class="grid grid-cols-1 gap-3">' + students.map(s => '<div class="glass rounded-2xl p-3"><div class="flex justify-between"><div><h4 class="font-bold text-sm">' + s.name + '</h4><p class="text-xs text-gray-500">' + s.grade + '</p></div><button onclick="openRewardModal(' + s.id + ',\'' + s.name + '\')" class="btn-primary px-2 py-1 rounded-lg text-white text-xs">+ منح</button></div><div class="mt-2">' + rewards.filter(r => r.studentId === s.id).map(r => '<div class="flex items-center gap-2 p-1 border-b"><i class="fas fa-trophy text-yellow-600 text-sm"></i><div><p class="text-xs">' + r.reason + '</p><p class="text-xs text-gray-500">' + r.date + '</p></div><button onclick="deleteReward(' + r.id + ')" class="text-red-500 text-xs">حذف</button></div>').join('') || '<div class="empty-message text-xs">لا توجد جوائز</div>' + '</div></div>').join('') + '</div></div>';
 }
 function openRewardModal(id, name) { document.getElementById('rewardStudentId').value = id; document.getElementById('rewardStudentName').value = name; document.getElementById('rewardDate').value = new Date().toISOString().split('T')[0]; document.getElementById('rewardModal').classList.add('show'); }
-function saveReward(e) { e.preventDefault(); rewards.push({ id: Date.now(), studentId: parseInt(document.getElementById('rewardStudentId').value), type: document.getElementById('rewardType').value, reason: document.getElementById('rewardReason').value, date: document.getElementById('rewardDate').value }); saveAllData(); closeModal('rewardModal'); renderRewards(document.getElementById('contentArea')); const s = students.find(s => s.id === parseInt(document.getElementById('rewardStudentId').value)); if(s && rewards.filter(r => r.studentId === s.id).length >= 3 && s.behavior !== 'excellent') { s.behavior = 'excellent'; saveAllData(); } }
+function saveReward(e) { e.preventDefault(); rewards.push({ id: Date.now(), studentId: parseInt(document.getElementById('rewardStudentId').value), reason: document.getElementById('rewardReason').value, date: document.getElementById('rewardDate').value }); saveAllData(); closeModal('rewardModal'); renderRewards(document.getElementById('contentArea')); }
 function deleteReward(id) { if(confirm('حذف الجائزة؟')) { rewards = rewards.filter(r => r.id !== id); saveAllData(); renderRewards(document.getElementById('contentArea')); } }
 
 function renderReports(container) {
-  container.innerHTML = `<div class="space-y-3"><div class="glass rounded-2xl p-3"><input type="text" id="reportSearchInput" placeholder="بحث بالاسم..." class="w-full p-2 rounded-xl border text-sm mb-2"><div class="overflow-x-auto"><table class="w-full"><thead><tr><th class="p-2">الاسم</th><th class="p-2">الغياب</th><th class="p-2">التأخير</th></tr></thead><tbody id="reportsTableBody"></tbody></table></div></div></div>`;
-  const update = () => { let filtered = students; if(currentReportSearchTerm) filtered = students.filter(s => s.name.includes(currentReportSearchTerm)); document.getElementById('reportsTableBody').innerHTML = filtered.map(s => { const abs = attendanceRecords.filter(a => a.studentId === s.id && a.type === 'absent').length; const late = attendanceRecords.filter(a => a.studentId === s.id && a.type === 'late').length; return `<tr class="border-b cursor-pointer hover:bg-gray-50" onclick="showFullReport(${s.id})"><td class="p-2 text-purple-600 font-medium">${s.name}</td><td class="p-2 text-red-600">${abs}</td><td class="p-2 text-orange-600">${late}络脉<tr>`; }).join(''); };
+  container.innerHTML = '<div class="space-y-3"><div class="glass rounded-2xl p-3"><input type="text" id="reportSearchInput" placeholder="بحث بالاسم..." class="w-full p-2 rounded-xl border text-sm mb-2"><div class="overflow-x-auto"><table class="w-full"><thead><tr><th class="p-2">الاسم</th><th class="p-2">عدد الغياب</th><th class="p-2">عدد التأخير</th></tr></thead><tbody id="reportsTableBody"></tbody></table></div></div></div>';
+  const update = () => { 
+    let filtered = students; 
+    if(currentReportSearchTerm) filtered = students.filter(s => s.name.includes(currentReportSearchTerm)); 
+    document.getElementById('reportsTableBody').innerHTML = filtered.map(s => { 
+      const abs = attendanceRecords.filter(a => a.studentId === s.id && a.type === 'absent').length; 
+      const late = attendanceRecords.filter(a => a.studentId === s.id && a.type === 'late').length; 
+      return '<tr class="border-b cursor-pointer hover:bg-gray-50" onclick="showFullReport(' + s.id + ')"><td class="p-2 text-purple-600 font-medium">' + s.name + '</td><td class="p-2 text-red-600">' + abs + '</td><td class="p-2 text-orange-600">' + late + '</td></tr>'; 
+    }).join(''); 
+  };
   document.getElementById('reportSearchInput').addEventListener('input', (e) => { currentReportSearchTerm = e.target.value; update(); });
   update();
 }
@@ -721,93 +671,39 @@ function showFullReport(studentId) {
   const absences = studentAttendance.filter(a => a.type === 'absent');
   const lates = studentAttendance.filter(a => a.type === 'late');
   
-  document.getElementById('reportContent').innerHTML = `
-  <div id="reportPrintArea" class="p-2">
-    <div class="report-header text-center mb-4">
-      <h2 class="text-xl font-bold">تقرير الطالبة الشامل</h2>
-      <p class="text-sm">المرشد التربوي</p>
-      <p class="text-xs mt-1">التاريخ: ${new Date().toLocaleDateString('ar-EG')}</p>
-    </div>
-    
-    <div class="glass p-3 mb-3">
-      <h3 class="font-bold text-md mb-2 border-b pb-1">المعلومات الشخصية</h3>
-      <div class="info-row"><span class="font-bold">الاسم الكامل:</span><span>${s.name}</span></div>
-      <div class="info-row"><span class="font-bold">تاريخ الميلاد:</span><span>${formatBirthDate(s.birthDate)}</span></div>
-      <div class="info-row"><span class="font-bold">الصف:</span><span>${s.grade} - ${s.section}</span></div>
-      <div class="info-row"><span class="font-bold">المستوى العلمي:</span><span>${academicLabels[s.academicLevel]}</span></div>
-      <div class="info-row"><span class="font-bold">السلوك:</span><span class="status-badge ${behaviorLabels[s.behavior].class}">${behaviorLabels[s.behavior].name}</span></div>
-    </div>
-    
-    <div class="glass p-3 mb-3">
-      <h3 class="font-bold text-md mb-2 border-b pb-1">معلومات الأب</h3>
-      <div class="info-row"><span class="font-bold">اسم الأب:</span><span>${s.fatherName || '-'}</span></div>
-      <div class="info-row"><span class="font-bold">المهنة:</span><span>${s.fatherJob || '-'}</span></div>
-      <div class="info-row"><span class="font-bold">رقم الهاتف:</span><span>${s.fatherPhone || '-'}</span></div>
-    </div>
-    
-    <div class="glass p-3 mb-3">
-      <h3 class="font-bold text-md mb-2 border-b pb-1">معلومات الأم</h3>
-      <div class="info-row"><span class="font-bold">اسم الأم:</span><span>${s.motherName || '-'}</span></div>
-      <div class="info-row"><span class="font-bold">المهنة:</span><span>${s.motherJob || '-'}</span></div>
-      <div class="info-row"><span class="font-bold">رقم الهاتف:</span><span>${s.motherPhone || '-'}</span></div>
-    </div>
-    
-    <div class="glass p-3 mb-3">
-      <h3 class="font-bold text-md mb-2 border-b pb-1">إحصائيات الحضور</h3>
-      <div class="grid grid-cols-2 gap-3 text-center">
-        <div class="p-2 bg-red-50 rounded-xl"><p class="text-xl font-bold text-red-600">${absences.length}</p><p>غياب</p></div>
-        <div class="p-2 bg-orange-50 rounded-xl"><p class="text-xl font-bold text-orange-600">${lates.length}</p><p>تأخير</p></div>
-      </div>
-    </div>
-    
-    <div class="glass p-3 mb-3">
-      <h3 class="font-bold text-md mb-2 border-b pb-1">ملاحظات المرشد</h3>
-      ${studentNotes.map(n => `<div class="note-card p-2 mb-1"><p class="text-sm">${n.text}</p><span class="text-xs text-gray-500">${n.date}</span></div>`).join('') || '<div class="empty-message text-sm">لا توجد ملاحظات</div>'}
-    </div>
-    
-    <div class="glass p-3 mb-3">
-      <h3 class="font-bold text-md mb-2 border-b pb-1">الجوائز التحفيزية</h3>
-      ${studentRewards.map(r => `<div class="flex items-center gap-2 p-1 border-b"><i class="fas fa-trophy text-yellow-600"></i><span class="text-sm">${r.reason} (${r.date})</span></div>`).join('') || '<div class="empty-message text-sm">لا توجد جوائز</div>'}
-    </div>
-    
-    <!-- فقط اسم مرشدة الصف - بدون نقاط ولا توقيع -->
-    <div class="glass p-3 mt-3">
-      <div class="info-row"><span class="font-bold">اسم مرشدة الصف:</span><span class="border-b border-gray-400 min-w-[180px] inline-block"></span></div>
-    </div>
-    
-    <div class="text-center text-xs text-gray-400 mt-3 pt-3 border-t">تم إنشاء التقرير بواسطة نظام المرشد التربوي</div>
-  </div>`;
+  document.getElementById('reportContent').innerHTML = '<div id="reportPrintArea" class="p-2">' +
+    '<div class="report-header text-center mb-4"><h2 class="text-xl font-bold">تقرير الطالبة الشامل</h2><p class="text-sm">' + s.name + '</p><p class="text-xs mt-1">التاريخ: ' + new Date().toLocaleDateString('ar-EG') + '</p></div>' +
+    '<div class="glass p-3 mb-3"><h3 class="font-bold text-md mb-2 border-b pb-1">المعلومات الشخصية</h3><div class="info-row"><span class="font-bold">الاسم الكامل:</span><span>' + s.name + '</span></div><div class="info-row"><span class="font-bold">تاريخ الميلاد:</span><span>' + formatBirthDate(s.birthDate) + '</span></div><div class="info-row"><span class="font-bold">الصف:</span><span>' + s.grade + ' - ' + s.section + '</span></div><div class="info-row"><span class="font-bold">المستوى العلمي:</span><span>' + academicLabels[s.academicLevel] + '</span></div><div class="info-row"><span class="font-bold">السلوك:</span><span class="status-badge ' + behaviorLabels[s.behavior].class + '">' + behaviorLabels[s.behavior].name + '</span></div></div>' +
+    '<div class="glass p-3 mb-3"><h3 class="font-bold text-md mb-2 border-b pb-1">معلومات الأب</h3><div class="info-row"><span class="font-bold">اسم الأب:</span><span>' + (s.fatherName || '-') + '</span></div><div class="info-row"><span class="font-bold">المهنة:</span><span>' + (s.fatherJob || '-') + '</span></div><div class="info-row"><span class="font-bold">رقم الهاتف:</span><span>' + (s.fatherPhone || '-') + '</span></div></div>' +
+    '<div class="glass p-3 mb-3"><h3 class="font-bold text-md mb-2 border-b pb-1">معلومات الأم</h3><div class="info-row"><span class="font-bold">اسم الأم:</span><span>' + (s.motherName || '-') + '</span></div><div class="info-row"><span class="font-bold">المهنة:</span><span>' + (s.motherJob || '-') + '</span></div><div class="info-row"><span class="font-bold">رقم الهاتف:</span><span>' + (s.motherPhone || '-') + '</span></div></div>' +
+    '<div class="glass p-3 mb-3"><h3 class="font-bold text-md mb-2 border-b pb-1">إحصائيات الحضور</h3><div class="grid grid-cols-2 gap-3 text-center"><div class="p-2 bg-red-50 rounded-xl"><p class="text-xl font-bold text-red-600">' + absences.length + '</p><p>غياب</p></div><div class="p-2 bg-orange-50 rounded-xl"><p class="text-xl font-bold text-orange-600">' + lates.length + '</p><p>تأخير</p></div></div></div>' +
+    '<div class="glass p-3 mb-3"><h3 class="font-bold text-md mb-2 border-b pb-1">ملاحظات المرشد</h3>' + (studentNotes.map(n => '<div class="note-card p-2 mb-1"><p class="text-sm">' + n.text + '</p><span class="text-xs text-gray-500">' + n.date + '</span></div>').join('') || '<div class="empty-message text-sm">لا توجد ملاحظات</div>') + '</div>' +
+    '<div class="glass p-3 mb-3"><h3 class="font-bold text-md mb-2 border-b pb-1">الجوائز التحفيزية</h3>' + (studentRewards.map(r => '<div class="flex items-center gap-2 p-1 border-b"><i class="fas fa-trophy text-yellow-600"></i><span class="text-sm">' + r.reason + ' (' + r.date + ')</span></div>').join('') || '<div class="empty-message text-sm">لا توجد جوائز</div>') + '</div>' +
+    '<div class="glass p-3 mt-3"><div class="info-row"><span class="font-bold">اسم مرشدة الصف:</span><span class="border-b border-gray-400 min-w-[180px] inline-block"></span></div></div>' +
+    '<div class="text-center text-xs text-gray-400 mt-3 pt-3 border-t">تم إنشاء التقرير بواسطة نظام المرشد التربوي</div></div>';
   document.getElementById('reportModal').classList.add('show');
 }
 
 function exportReportToPDF() { 
   const element = document.getElementById('reportPrintArea'); 
-  html2pdf().set({ margin: 8, filename: `تقرير_طالبة.pdf`, image: { quality: 0.98 }, html2canvas: { scale: 2 } }).from(element).save(); 
+  html2pdf().set({ margin: 8, filename: 'تقرير_طالبة.pdf', image: { quality: 0.98 }, html2canvas: { scale: 2 } }).from(element).save(); 
 }
 
 function renderSettings(container) {
-  container.innerHTML = `<div class="glass rounded-2xl p-4"><button onclick="exportToExcel()" class="btn-primary w-full py-2 rounded-xl mb-2 text-white">تصدير Excel</button><button onclick="clearAllData()" class="bg-red-600 w-full py-2 rounded-xl text-white mb-2">حذف جميع البيانات</button><div class="bg-gray-50 p-2 rounded-xl text-sm"><p>الطالبات: ${students.length}</p><p>سجلات الغياب: ${attendanceRecords.length}</p><p>الملاحظات: ${notes.length}</p><p>الجوائز: ${rewards.length}</p></div></div>`;
+  container.innerHTML = '<div class="glass rounded-2xl p-4"><button onclick="exportToExcel()" class="btn-primary w-full py-2 rounded-xl mb-2 text-white">تصدير Excel</button><button onclick="clearAllData()" class="bg-red-600 w-full py-2 rounded-xl text-white mb-2">حذف جميع البيانات</button><div class="bg-gray-50 p-2 rounded-xl text-sm"><p>الطالبات: ' + students.length + '</p><p>سجلات الغياب: ' + attendanceRecords.length + '</p><p>الملاحظات: ' + notes.length + '</p><p>الجوائز: ' + rewards.length + '</p></div></div>';
 }
 
 function exportToExcel() {
   const data = students.map(s => ({ 
-    'الاسم': s.name, 
-    'تاريخ الميلاد': s.birthDate || '-', 
-    'الصف': s.grade, 
-    'الشعبة': s.section, 
-    'اسم الأب': s.fatherName || '-', 
-    'مهنة الأب': s.fatherJob || '-', 
-    'هاتف الأب': s.fatherPhone || '-', 
-    'اسم الأم': s.motherName || '-', 
-    'مهنة الأم': s.motherJob || '-', 
-    'هاتف الأم': s.motherPhone || '-', 
-    'المستوى': academicLabels[s.academicLevel], 
-    'السلوك': behaviorLabels[s.behavior].name 
+    'الاسم': s.name, 'تاريخ الميلاد': s.birthDate || '-', 'الصف': s.grade, 'الشعبة': s.section, 
+    'اسم الأب': s.fatherName || '-', 'مهنة الأب': s.fatherJob || '-', 'هاتف الأب': s.fatherPhone || '-', 
+    'اسم الأم': s.motherName || '-', 'مهنة الأم': s.motherJob || '-', 'هاتف الأم': s.motherPhone || '-', 
+    'المستوى': academicLabels[s.academicLevel], 'السلوك': behaviorLabels[s.behavior].name 
   }));
   const ws = XLSX.utils.json_to_sheet(data);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'الطالبات');
-  XLSX.writeFile(wb, `الطالبات_${new Date().toISOString().slice(0,10)}.xlsx`);
+  XLSX.writeFile(wb, 'الطالبات_' + new Date().toISOString().slice(0,10) + '.xlsx');
 }
 
 function exportCurrentToPDF() { html2pdf().from(document.getElementById('contentArea')).save(); }
@@ -816,18 +712,12 @@ function clearAllData() { if(confirm('تحذير! حذف جميع البيانا
 document.addEventListener('DOMContentLoaded', function() {
   const menuBtn = document.getElementById('menuButton');
   if (menuBtn) {
-    menuBtn.addEventListener('touchstart', function(e) {
-      e.preventDefault();
-      toggleSidebar();
-    });
-    menuBtn.addEventListener('click', function(e) {
-      toggleSidebar();
-    });
+    menuBtn.addEventListener('touchstart', function(e) { e.preventDefault(); toggleSidebar(); });
+    menuBtn.addEventListener('click', function(e) { toggleSidebar(); });
   }
 });
 
 window.onclick = function(e) { if(e.target.classList.contains('modal')) e.target.classList.remove('show'); };
-document.addEventListener('keydown', function(e) { if(e.key === 'Escape') document.querySelectorAll('.modal').forEach(m => m.classList.remove('show')); });
 if(students.length === 0) generateSampleData();
 </script>
 </body>
