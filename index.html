@@ -41,6 +41,7 @@ background: rgba(255, 255, 255, 0.95);
 backdrop-filter: blur(10px);
 border: 1px solid rgba(255, 255, 255, 0.2);
 }
+/* ========== القائمة الجانبية المعدلة بالكامل لأيفون ========== */
 .sidebar {
 background: linear-gradient(180deg, #4c1d95 0%, #2e1065 100%);
 transition: transform 0.3s ease;
@@ -48,10 +49,14 @@ position: fixed;
 right: 0;
 top: 0;
 bottom: 0;
-z-index: 50;
+z-index: 9999;
 transform: translateX(100%);
-width: 75%;
-max-width: 280px;
+width: 80%;
+max-width: 300px;
+padding-top: env(safe-area-inset-top, 20px);
+padding-bottom: env(safe-area-inset-bottom, 20px);
+overflow-y: auto;
+box-shadow: -5px 0 25px rgba(0,0,0,0.3);
 }
 .sidebar.open {
 transform: translateX(0);
@@ -60,7 +65,7 @@ transform: translateX(0);
 position: fixed;
 inset: 0;
 background: rgba(0,0,0,0.5);
-z-index: 40;
+z-index: 9998;
 display: none;
 }
 .sidebar-overlay.open {
@@ -69,11 +74,19 @@ display: block;
 .sidebar-item {
 transition: all 0.3s ease;
 position: relative;
+color: white !important;
+}
+.sidebar-item i {
+color: white !important;
+}
+.sidebar-item span {
+color: white !important;
 }
 .sidebar-item:hover, .sidebar-item.active {
 background: rgba(139, 92, 246, 0.3);
 border-right: 3px solid #8b5cf6;
 }
+/* ========== نهاية تعديل القائمة ========== */
 .card-hover {
 transition: all 0.3s ease;
 }
@@ -105,7 +118,7 @@ display: none;
 position: fixed;
 top: 0; left: 0; width: 100%; height: 100%;
 background: rgba(0,0,0,0.5);
-z-index: 1000;
+z-index: 10000;
 justify-content: center;
 align-items: center;
 }
@@ -187,6 +200,21 @@ button, .tab-btn, .action-btn, .sidebar-item {
 min-height: 44px;
 touch-action: manipulation;
 }
+/* زر القائمة المكون من ثلاث خطوط - كبير وواضح */
+.menu-button {
+min-width: 52px;
+min-height: 52px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 12px;
+background: rgba(255,255,255,0.9);
+box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.menu-button i {
+font-size: 28px !important;
+color: #4c1d95;
+}
 .grid-cols-1.md\:grid-cols-2 {
 grid-template-columns: 1fr;
 }
@@ -234,8 +262,9 @@ grid-template-columns: repeat(2, 1fr);
 <!-- Header (Top Bar) -->
 <header class="glass h-14 flex items-center justify-between px-4 shadow-sm z-10 flex-shrink-0">
 <div class="flex items-center gap-3">
-<button onclick="toggleSidebar()" class="p-2 rounded-lg hover:bg-gray-100 transition">
-<i class="fas fa-bars text-gray-600 text-xl"></i>
+<!-- زر القائمة المنسدلة - كبير ومناسب لشاشات اللمس -->
+<button onclick="toggleSidebar()" class="menu-button">
+<i class="fas fa-bars"></i>
 </button>
 <button id="backButton" onclick="goBack()" class="hidden px-3 py-1 bg-gray-100 rounded-lg hover:bg-gray-200 transition text-sm font-medium">
 <i class="fas fa-arrow-right ml-1"></i> رجوع
@@ -262,29 +291,29 @@ grid-template-columns: repeat(2, 1fr);
 </div>
 </div>
 <nav class="p-3 space-y-1">
-<button onclick="showScreen('dashboard')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
-<i class="fas fa-chart-line w-5 text-white"></i><span>لوحة التحكم</span>
+<button onclick="showScreen('dashboard')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<i class="fas fa-chart-line w-5"></i><span>لوحة التحكم</span>
 </button>
-<button onclick="showScreen('students')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
-<i class="fas fa-user-graduate w-5 text-white"></i><span>الطالبات</span>
+<button onclick="showScreen('students')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<i class="fas fa-user-graduate w-5"></i><span>الطالبات</span>
 </button>
-<button onclick="showScreen('attendance')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
-<i class="fas fa-calendar-check w-5 text-white"></i><span>الغياب والتأخير</span>
+<button onclick="showScreen('attendance')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<i class="fas fa-calendar-check w-5"></i><span>الغياب والتأخير</span>
 </button>
-<button onclick="showScreen('notes')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
-<i class="fas fa-pen w-5 text-white"></i><span>ملاحظات المرشد</span>
+<button onclick="showScreen('notes')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<i class="fas fa-pen w-5"></i><span>ملاحظات المرشد</span>
 </button>
-<button onclick="showScreen('rewards')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
-<i class="fas fa-award w-5 text-white"></i><span>جوائز تحفيزية</span>
+<button onclick="showScreen('rewards')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<i class="fas fa-award w-5"></i><span>جوائز تحفيزية</span>
 </button>
-<button onclick="showScreen('reports')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
-<i class="fas fa-file-alt w-5 text-white"></i><span>التقارير</span>
+<button onclick="showScreen('reports')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<i class="fas fa-file-alt w-5"></i><span>التقارير</span>
 </button>
-<button onclick="showScreen('settings')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right text-white hover:bg-purple-700/30 transition">
-<i class="fas fa-cog w-5 text-white"></i><span>الإعدادات</span>
+<button onclick="showScreen('settings')" class="sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right hover:bg-purple-700/30 transition">
+<i class="fas fa-cog w-5"></i><span>الإعدادات</span>
 </button>
 </nav>
-<div class="absolute bottom-0 w-full p-3 border-t border-purple-800">
+<div class="absolute bottom-0 w-full p-3 border-t border-purple-800" style="padding-bottom: env(safe-area-inset-bottom, 20px);">
 <div class="flex items-center gap-3 mb-3 p-2 rounded-xl bg-purple-900/30">
 <div class="w-8 h-8 bg-purple-400 rounded-full flex items-center justify-center text-white font-bold text-sm"><i class="fas fa-user text-white"></i></div>
 <div class="flex-1">
